@@ -11,7 +11,7 @@ function setConnected(connected) {
     }
     $("#greetings").html("");
 }
-
+/** merged function sendname() to connect**/
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
@@ -22,6 +22,8 @@ function connect() {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
+ stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+     
 }
 
 function disconnect() {
@@ -31,7 +33,7 @@ function disconnect() {
     setConnected(false);
     console.log("Disconnected");
 }
-
+/** merged function sendName() to connect() above**/
 function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
 }
